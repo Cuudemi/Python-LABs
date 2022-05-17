@@ -5,13 +5,28 @@ import split_data
 import os
 from os import path
 
+# !!!!
+# помнится, Петрина придиралась к единицам измерения
+# времени и поэтому тебе пришлось преобразовывать время
+# в минуты. сдавая лабу у своего преподавателя, я всё это
+# подтерла, так что тебе нужно снова преобразовать время
+# (делением на 60?). возможно, оно осталось в коде 
+# второй лабораторной. но тогда нужно, возможно, поправить
+# последние три тестика. если будут вопросы -- то пиши
+
+
+# raise вызывает конкретную ошибку, которую мы ему
+# напишем, когда что-то пойдет не так. советую намеренно
+# запустить программму с неверными аргументами и посмотреть,
+# как оно работает. плюс этого raise в том, что файлик
+# лабораторной может работать обособленно от файлика с
+# тестированием, ловя и сообщая о ошибках самостоятельно.
+# выглядит здорово
 
 def read_data_from_file(file) -> list:
     """ Данная функция читает файл csv с пропуском первой строки и возвращает массив строк """
     if (os.access(file, os.F_OK) == False):
         raise FileNotFoundError("данного файла не существует. Завершение программы")
-        # print ("Ошибка: данного файла не существует")
-        # return -1
 
     if (os.access(file, os.R_OK)):
         full_name = path.basename(file)
@@ -26,12 +41,8 @@ def read_data_from_file(file) -> list:
                 return data
         else:
             raise TypeError("неверный формат файла. Завершение программы")
-            #print ("Ошибка: неверный формат файла:", name, "вместо .csv. Завершение программы.")
-            #return -3
     else:
         raise TypeError("нет прав чтения. Завершение программы")
-        #print ("Ошибка: файл не имеет прав на чтение. Завершение программы.")
-        #return -2
 
 
 def calculate_statistics(line):
@@ -45,7 +56,6 @@ def calculate_statistics(line):
 
 
 
-
 if __name__== '__main__':
     if len (sys.argv) < 3:
         print('Ошибка: недостаточное количество аргументов. Завершение программы.')
@@ -55,13 +65,9 @@ if __name__== '__main__':
     con_time = sys.argv[2]
 
     data = read_data_from_file(con_file)
-    #if len(str(data)) == 2:
-        #exit(1)
 
     segment = split_data.split_data(data, con_time)
     print(len(segment))
-    #if len(str(segment)) == 2:
-        #exit(1)
 
     for line in segment:
         l, mean, mode, median = calculate_statistics(line)

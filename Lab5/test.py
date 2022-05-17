@@ -6,12 +6,23 @@ from lab2 import *
 import pytest
 
 
+# pytest.raises позволяет убедиться в том, что
+# вызвано то исключение, которое нам нужно и
+# которое мы ждем. выглядит красиво и по-деловому
+
 def test_no_file():
     """ Тест на отсутствие файла """
     with pytest.raises(FileNotFoundError):
         read_data_from_file("non-existent_file.csv")
 
 
+# github не позволяет добавить в репозиторий файл,
+# который не имеет совершенно никаких прав, так что
+# я удалила файлик no_r.csv и тебе нужно будет
+# создать его самостоятельно. и затем убрать у
+# него все права (chmod ugo-wrx no_r.csv). 
+# убедиться, что прав у него и правда
+# нет: ls -la
 def test_no_roots():
     """ Тест на то, имеет ли файл права на чтение """
     with pytest.raises(TypeError):
